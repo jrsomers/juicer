@@ -53,9 +53,9 @@ module Juicer
 
         use_tmp = unless output
                     output = file
-                    file = File.join(Dir::tmpdir, File.basename(file) + '.min.tmp.' + type.to_s)
+                    file = output + ".tmp"
                     FileUtils.mkdir_p(File.dirname(file))
-                    FileUtils.move(output, file)
+                    FileUtils.cp(output, file)
 
                     true
                   end
@@ -64,7 +64,6 @@ module Juicer
         FileUtils.mkdir_p(out_dir) unless File.exists?(out_dir)
         execute("-jar", "#{locate_jar}#{jar_args}", "--js_output_file", output, "--js", file)
 
-        File.delete(file) if use_tmp
       end
 
       chain_method :save
