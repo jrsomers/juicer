@@ -30,7 +30,7 @@ module Juicer
     # Run command
     #
     def execute(*params)
-      cmd = IO.popen(([self.command] + params).flatten, "r")
+      cmd = IO.popen(([self.command] + params).flatten.join(" "), "r")
       results = cmd.gets(nil)
       cmd.close
       results
